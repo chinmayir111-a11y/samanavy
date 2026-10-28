@@ -1,0 +1,18 @@
+# Competitor Research: SAMANVAY (SIH26264)
+
+**Method:** On 27 Oct 2026 I searched GitHub for "SIH26264", "AICTE complaint" and "institution complaint monitoring" and found 16 or more public SIH26264 repos. I shallow-cloned the 5 most relevant below and read their engine code. I also opened the CPGRAMS home page, the PIB CPGRAMS backgrounder (9 Aug 2026) and UGC e-Samadhan.
+
+**Limitations:** SIH submissions are private, so this is **not** a survey of all competing teams. Repos were changing on the research date. I did not run any competitor app. The AICTE grievance pages could not be accessed (connection reset or 404).
+
+**Labels:** V = Verified (I read the code). P = Partially verified (README plus keyword grep only).
+
+| Name | URL | Verified features | Gaps (relative to SAMANVAY's plan) |
+|---|---|---|---|
+| AICTE ICMS (narendrasinghyadav-coder) | https://github.com/narendrasinghyadav-coder/aicte-icms | Fuzzy institution matcher (ID normalisation, abbreviations, Jaro-Winkler, acronyms, city check, 85/55 bands); cross-bureau overlap with plain-language reasons; TF-IDF duplicates; Acknowledge → lead bureau → note on every case; SSE dashboard; 10 reports. [P, confidence high] | No hash-chained audit, no Hindi, no check before an action is taken (grep). Accuracy measured only on its own seed data. |
+| AICTE Samvad (Altamash346/aicte-sangam) | https://github.com/Altamash346/aicte-sangam | Contradictory-action rules (`engine/conflicts.py`); hash-chained audit with verify (`security.py`); English/Hinglish/Hindi concept matching; public tracking; evaluation on synthetic data: precision 0.48 / recall 1.0 at threshold 0.4, 0 wrong institution links. [V, high] | Detects conflicts after the fact rather than guarding the action. 7-theme lexicon. No 75/90/100% SLA ladder seen. 2 commits. |
+| "AICTE Samanvay" (chandan-bk/aicte-oneview) | https://github.com/chandan-bk/aicte-oneview | Pre-Action Check advisory; SHA-256 hash-chained audit; Hindi/Hinglish synonyms; links cases and never merges them; Institution 360; CSV upload. [V, high] | Front end only (localStorage, no server-side role checks); no measured accuracy. **Same product name as ours.** |
+| SIH26264 Complaints Dashboard (Adit-K06) | https://github.com/Adit-K06/SIH26264-Complains-Dashboard | RapidFuzz plus corpus TF-IDF overlap (Tier A rules, Tier B similarity); precision/recall/F1 with threshold tuning and an Evaluation page; demo clock (`demo_clock_offset_days`); optional embeddings. [V, high] | No hash chain, no Hindi, no conflict guard (grep). Docker-heavy setup. Its code comments admit flags at 0.40 are "please review", not proof. |
+| AICTE ICMS (dhanya808) | https://github.com/dhanya808/aicte-complaint-portal | Levenshtein name matching; exact-ID overlap; feature-rich UI (Joint Resolution Room, citizen tracker). [V, high] | Its "AI semantic match" is actually a hard-coded category-group rule adding +2 to confidence, so the claim is overstated. No backend. |
+| Baseline: CPGRAMS / UGC e-Samadhan | https://pgportal.gov.in/ · https://samadhaan.ugc.ac.in/ | CPGRAMS: status tracking by registration ID, appeal, Hindi, auto-routing, 21-day timeline, feedback call centre [V, from the PIB doc]. e-Samadhan: "Bureau" roles and status counts [V]. | Both are organised around one citizen, one grievance and one department. I found no public evidence of a view showing the same institution handled across several units. CPGRAMS repeat-grievance AI is only in a secondary source [unverified]. |
+
+**Name collision:** besides chandan-bk's "AICTE Samanvay", the repo `rokadepiyush49-rgb/Samanvay-SIH-26` is empty and describes the same concept. Check whether it belongs to this team.
